@@ -1,53 +1,40 @@
-
+import { useState } from 'react';
 import Section from 'components/Section/Section';
 import FeedbackOptions from 'components/FeedbackOptions/FeedbackOptions';
 import Statistics from 'components/Statistics/Statistics';
 import Notification from 'components/Notification/Notification';
 import Box from 'components/Box/Box';
-import { useState } from 'react';
-
-
 
 export default function App() {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-
-  
   const leaveFeedback = (propertyName) => {
     switch (propertyName) {
       case "good":
-        setGood()
+        setGood(prev => prev + 1)
         break;
       case "neutral":
-        setNeutral();
+        setNeutral(prev => prev + 1);
         break;
       case "bad":
-        setBad();
+        setBad(prev => prev + 1);
         break;
       default:
         break;
-    }
-
-    this.setState((prevState) => {
-      return {
-        [propertyName]: prevState[propertyName] + 1,
-      }
-    })
-  }
+    };
+  };
 
   const countTotalFeedback = () => {
-    const total = good + neutral + bad;
-    return total;
-  }
+    return good + neutral + bad;
+  };
 
-  const countPositiveFeedbackPercentage = () => {
-    const total = countTotalFeedback();
-    const positiveValue = good;
+  const total = countTotalFeedback();
 
-    return Math.round((positiveValue / total) * 100);
-  }
+  const countPositiveFeedbackPercentage = (good, total) => {
+    return Math.round((good / total) * 100);
+  };
 
   return (
     <Box
@@ -64,25 +51,23 @@ export default function App() {
     >
       <Section title="Please leave feedback">
         <FeedbackOptions
-          options={this.state}
+          options={["good", "neutral", "bad"]}
           onLeaveFeedback={leaveFeedback} />
       </Section>
       <Section title="Statistics">
-        {countTotalFeedback() === 0
+        {total === 0
           ? <Notification message="There is no feedback" />
           : <Statistics
             good={good}
             neutral={neutral}
             bad={bad}
-            total={countTotalFeedback()}
+            total={total}
             positivePercentage={countPositiveFeedbackPercentage}
           />}
       </Section>
     </Box>
   );
 }
-
-
 
 // export default class App extends Component {
 //   state = {

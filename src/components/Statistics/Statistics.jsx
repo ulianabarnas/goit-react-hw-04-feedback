@@ -29,7 +29,7 @@ export default function Statistics ({ good, neutral, bad, total, positivePercent
         <Box
           mt={[4, 0]}>
           <p><Text>Total: </Text><Value>{total}</Value></p>
-          <p><Text>Positive feedback: </Text><Value>{positivePercentage()}%</Value></p>
+          <p><Text>Positive feedback: </Text><Value>{positivePercentage(good, total)}%</Value></p>
         </Box>
       </Box>
     </Box>
